@@ -1,6 +1,5 @@
 package com.qlns.ui;
 
-
 import com.qlns.dao.NhanVienDAO;
 import com.qlns.entity.BNS;
 import com.qlns.entity.nv01;
@@ -19,17 +18,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
-
 public class DangNhapJFrame extends javax.swing.JFrame {
-        List<BNS> admin = new ArrayList<>();
-        List<nv01> a = new ArrayList<>();
-                
- //private NhanVien LoggedInUser;
-   
+
+    List<BNS> admin = new ArrayList<>();
+    List<nv01> a = new ArrayList<>();
+
+    //private NhanVien LoggedInUser;
     public DangNhapJFrame() {
         initComponents();
         setLocationRelativeTo(null);
-       
+
     }
 
     boolean checkNull() {
@@ -51,69 +49,61 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     NhanVienDAO nvDAO = new NhanVienDAO();
 
     void logIn() {
-   if(checkNull()){
-       String connectionUrl = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa";
-Connection con;
-try {
-    admin.removeAll(admin);
-    con = DriverManager.getConnection(connectionUrl);
-    Statement stm = con.createStatement();
-    ResultSet rs = stm.executeQuery("Select * from BNS");
-    while (rs.next()) {
-        BNS ad = new BNS(rs.getString("MaNV"), rs.getString("MatKhau"));
-               
-        admin.add(ad);
-    }
-} catch (SQLException ex) {
-    Logger.getLogger(DangNhapJFrame.class.getName()).log(Level.SEVERE, null, ex);
-}
+        if (checkNull()) {
+            String connectionUrl = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa";
+            Connection con;
+            try {
+                admin.removeAll(admin);
+                con = DriverManager.getConnection(connectionUrl);
+                Statement stm = con.createStatement();
+                ResultSet rs = stm.executeQuery("Select * from BNS");
+                while (rs.next()) {
+                    BNS ad = new BNS(rs.getString("MaNV"), rs.getString("MatKhau"));
 
-for (BNS a : admin) {
-    if (a.getMaNV().equals(txtUser.getText().trim()) && (a.getMatKhau().equals(new String(txtPass.getPassword()).trim()))) {
-        JOptionPane.showMessageDialog(this, "Login Thành công ");
-        BanNhanSuJFrame adminFrame = new BanNhanSuJFrame(); // Tạo một biến mới cho frame
-        adminFrame.setVisible(true);
-        dispose();
-        return;
-    }
-}
-
-
-        try {
-            a.retainAll(a);
-           con = DriverManager.getConnection(connectionUrl);
-            Statement stm = con.createStatement();
-            ResultSet rs = stm.executeQuery("Select * from NhanVien");
-            while (rs.next()) {
-                nv01 ad = new nv01(rs.getString("MaNV"), rs.getString("MatKhau"), rs.getString("HoVaTen"));
-                a.add(ad);
+                    admin.add(ad);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DangNhapJFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(DangNhapJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
 
-        for (nv01 a : a) {
-            if (a.getMaNV().equals(txtUser.getText().trim()) && (a.getMatKhau().equals(new String(txtPass.getPassword()).trim()))) {
-                JOptionPane.showMessageDialog(this, "Login Thành công ");
-                Auth.user = a;
-                ChamCongJFrame as = new ChamCongJFrame();
-                as.setVisible(true);
-                dispose();
-                return;
+            for (BNS a : admin) {
+                if (a.getMaNV().equals(txtUser.getText().trim()) && (a.getMatKhau().equals(new String(txtPass.getPassword()).trim()))) {
+                    JOptionPane.showMessageDialog(this, "Login Thành công ");
+                    BanNhanSuJFrame adminFrame = new BanNhanSuJFrame(); // Tạo một biến mới cho frame
+                    adminFrame.setVisible(true);
+                    dispose();
+                    return;
+                }
             }
+
+            try {
+                //retainAll 
+                a.retainAll(a);
+                con = DriverManager.getConnection(connectionUrl);
+                Statement stm = con.createStatement();
+                ResultSet rs = stm.executeQuery("Select * from NhanVien");
+                while (rs.next()) {
+                    nv01 ad = new nv01(rs.getString("MaNV"), rs.getString("MatKhau"), rs.getString("HoVaTen"));
+                    a.add(ad);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DangNhapJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            for (nv01 a : a) {
+                if (a.getMaNV().equals(txtUser.getText().trim()) && (a.getMatKhau().equals(new String(txtPass.getPassword()).trim()))) {
+                    JOptionPane.showMessageDialog(this, "Login Thành công ");
+                    Auth.user = a;
+                    ChamCongJFrame as = new ChamCongJFrame();
+                    as.setVisible(true);
+                    dispose();
+                    return;
+                }
+            }
+
+            JOptionPane.showMessageDialog(this, "Login Thất bại, sai Tài Khoản Hoặc Mật Khẩu");
         }
-            
-            
-        
-
-
- JOptionPane.showMessageDialog(this, "Login Thất bại, sai Tài Khoản Hoặc Mật Khẩu");
-       }
     }
-    
-    
-    
-       
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -232,4 +222,6 @@ for (BNS a : admin) {
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
+
+    
 }

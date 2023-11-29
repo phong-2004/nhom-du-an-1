@@ -60,7 +60,12 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
         jMenuItem7.setText("Lương");
         jMenu2.add(jMenuItem7);
 
-        jMenuItem8.setText("Chức vụ");
+        jMenuItem8.setText("Chấm công");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
@@ -81,20 +86,26 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 608, Short.MAX_VALUE)
+            .addGap(0, 737, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 424, Short.MAX_VALUE)
+            .addGap(0, 526, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
- new Admin().setVisible(true);
-            dispose(); 
+        new Admin().setVisible(true);
+        dispose();        
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+       new QLChamCong().setVisible(true);
+       dispose();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     
     public static void main(String args[]) {

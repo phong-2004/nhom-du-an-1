@@ -37,23 +37,23 @@ public class Admin extends javax.swing.JFrame {
     private Map<String, String> phongBanMap = new HashMap<>();
     DefaultTableModel model = new DefaultTableModel(new String[]{"Mã NV", "Họ Tên", "Số ĐT", "Email", "CCCD", "Ngày Sinh", "Giới Tính", "Mật Khẩu", "Địa Chỉ", "Bậc Lương", "Ảnh", "Mã PB"}, 0);
     int index = 0;
-
+ //private Connection conn;
     public Admin() {
         initComponents();
         setLocationRelativeTo(null);
         loadDataToTable();
         phongBanMap = new HashMap<>();
-        map();
+      //  map();
     }
 
-    public void map() {
-         phongBanMap.put("Phòng Kinh Doanh", "PB001");
-        phongBanMap.put("Phòng Marketing", "PB002");
-        phongBanMap.put("Phòng IT", "PB004");
-        phongBanMap.put("Phòng Tài Chính", "PB005");
-        phongBanMap.put("Phong Ban A", "PB003");
-       
-    }
+//    public void map() {
+//         phongBanMap.put("Phòng Kinh Doanh", "PB001");
+//        phongBanMap.put("Phòng Marketing", "PB002");
+//        phongBanMap.put("Phòng IT", "PB004");
+//        phongBanMap.put("Phòng Tài Chính", "PB005");
+//        phongBanMap.put("Phong Ban A", "PB003");
+//       
+//    }
 
     private void Savedata() {
 
@@ -145,6 +145,7 @@ public class Admin extends javax.swing.JFrame {
     }
 
     private void loadDataToTable() {
+        //String phongban = cbPhongBan.getItemAt(index);
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
@@ -153,6 +154,7 @@ public class Admin extends javax.swing.JFrame {
             Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa"); // kết nối database
             // Connection conn2 = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa"); // kết nối database
             String sql = "SELECT * FROM quanly";
+            
 
             Statement statement = conn.createStatement();
             ResultSet rs = statement.executeQuery(sql);
@@ -223,17 +225,39 @@ public class Admin extends javax.swing.JFrame {
         }
 
     }
+ public String layTenPhongBan(String maPhongBan) {
+        String tenPhongBan = null;
 
-    private String getKeyFromValue(String value) {
-        for (Map.Entry<String, String> entry : phongBanMap.entrySet()) {
-            if (entry.getValue().equals(value)) {
-                return entry.getKey();
+        try {
+            String url = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;";
+            String username = "SA";
+            String password = "phong123aa";
+
+            Connection conn = DriverManager.getConnection(url, username, password);
+
+            String query = "SELECT TenPB FROM PhongBan WHERE MaPB = ?";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, maPhongBan);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                tenPhongBan = rs.getString("TenPB");
             }
+
+            rs.close();
+            pstmt.close();
+            conn.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            // Xử lý ngoại lệ nếu có
         }
-        return null;
+
+        return tenPhongBan;
     }
 
-    private void clickTable() {
+
+
+    private void clickTable( ) {
 
         if (model.getRowCount() < 0) {
             index = 0;
@@ -258,23 +282,16 @@ public class Admin extends javax.swing.JFrame {
         lblanhnv.setIcon(new ImageIcon(scaledImage));
 
         txtluong.setText(model.getValueAt(index, 9).toString());
-      String maPhongBan = model.getValueAt(index, 11).toString();
+      
+     String maPhongBan = model.getValueAt(index, 11).toString();
 
-    // In giá trị maPhongBan để debug
-    System.out.println("Ma Phong Ban tu Model: " + maPhongBan);
+    // Gọi hàm để lấy tên phòng ban tương ứng
+    String tenPhongBan = layTenPhongBan(maPhongBan);
 
-    // Tìm tên phòng ban tương ứng trong phongBanMap
-    String tenPhongBan = phongBanMap.get(maPhongBan);
-
-    // In giá trị tên phòng ban để debug
-    System.out.println("Ten Phong Ban tu Map: " + tenPhongBan);
-
-    // Cập nhật giá trị của JComboBox
+    
     if (tenPhongBan != null) {
         cbPhongBan.setSelectedItem(tenPhongBan);
     }
-            
-     
 
     }
 
@@ -952,7 +969,7 @@ public class Admin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtmanvMouseClicked
 
     private void cbPhongBanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbPhongBanActionPerformed
-        map();
+      
 
     }//GEN-LAST:event_cbPhongBanActionPerformed
 

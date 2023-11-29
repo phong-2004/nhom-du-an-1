@@ -3,8 +3,8 @@ package com.qlns.entity;
 
 
 public class Account_Admins {
-    public class NhanVien {
-        private String MaNV;
+    
+        private String MaQL;
         private String HoVaTen;
         private String Email;
         private String SDT;
@@ -18,12 +18,12 @@ public class Account_Admins {
         private String MaPB;
     
         // Getter và setter cho MaNV
-        public String getMaNV() {
-            return MaNV;
+        public String getMaQL() {
+            return MaQL;
         }
     
-        public void setMaNV(String maNV) {
-            this.MaNV = maNV;
+        public void setMaQL(String maQL) {
+            this.MaQL = maQL;
         }
     
         // Getter và setter cho HoVaTen
@@ -124,6 +124,6 @@ public class Account_Admins {
         public void setMaPB(String maPB) {
             this.MaPB = maPB;
         }
-    }
+    
     
 }

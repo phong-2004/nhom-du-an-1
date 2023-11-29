@@ -24,12 +24,7 @@ public class nv01 {
 
     public nv01() {
     }
-        
 
-    
-
-        
-        
         // Getter và setter cho MaNV
         public String getMaNV() {
             return MaNV;

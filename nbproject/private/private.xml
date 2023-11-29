@@ -3,12 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/entity/nv01.java</file>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/ui/DangNhapJFrame.java</file>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/utils/Auth.java</file>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/ui/ChamCongJFrame.java</file>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/ui/BanNhanSuJFrame.java</file>
-            <file>file:/C:/Users/ACER/Desktop/QLNS/src/com/qlns/ui/Admin.java</file>
+            <file>file:/D:/FPT%20Polytechnic/PRO1041_DA1/QLNS/src/com/qlns/ui/QLChamCong.java</file>
+            <file>file:/D:/FPT%20Polytechnic/PRO1041_DA1/QLNS/src/com/qlns/utils/JDBC.java</file>
+            <file>file:/D:/FPT%20Polytechnic/PRO1041_DA1/QLNS/src/com/qlns/ui/ChamCongJFrame.java</file>
+            <file>file:/D:/FPT%20Polytechnic/PRO1041_DA1/QLNS/src/com/qlns/ui/DangNhapJFrame.java</file>
         </group>
     </open-files>
 </project-private>
