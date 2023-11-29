@@ -1,0 +1,19 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "c:\\Users\\ACER\\Desktop\\javax\\activation.jar",
+        "c:\\Users\\ACER\\Desktop\\javax\\javax.mail.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\commons-codec-1.11.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\commons-collections4-4.2.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\commons-compress-1.18.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\poi-4.0.1.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\poi-ooxml-4.0.1.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\poi-ooxml-schemas-4.0.1.jar",
+        "c:\\Users\\ACER\\Downloads\\poi_chaytot\\poi_chaytot\\thuvienpoi\\xmlbeans-3.0.2.jar",
+        "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\jcalendar-1.4.jar",
+        "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\jgoodies-common-1.2.0.jar",
+        "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\jgoodies-looks-2.4.1.jar",
+        "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\junit-4.6.jar",
+        "c:\\Users\\ACER\\Downloads\\sqljdbc_12.2.0.0_enu\\sqljdbc_12.2\\enu\\mssql-jdbc-12.2.0.jre11.jar"
+    ]
+}
