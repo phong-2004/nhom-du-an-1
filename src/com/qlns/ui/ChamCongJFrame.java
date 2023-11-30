@@ -3,7 +3,7 @@ package com.qlns.ui;
 import com.qlns.entity.NhanVien;
 import com.qlns.entity.nv01;
 import com.qlns.utils.Auth;
-import com.qlns.utils.JDBC;
+//import com.qlns.utils.JDBC;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,17 +12,17 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-import java.sql.PreparedStatement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JLabel;
+//import java.sql.PreparedStatement;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import javax.swing.JLabel;
 import com.qlns.entity.nv01;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.io.File;
+//import java.io.FileReader;
+//import java.io.FileWriter;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
 
 //import com.qlns.utils.JDBC;
 public class ChamCongJFrame extends javax.swing.JFrame {
@@ -42,7 +42,7 @@ public class ChamCongJFrame extends javax.swing.JFrame {
         updateDateTimeLabels();
         loadTimeInInfo();
         loadTimeOut();
-        hienThi();
+       // hienThi();
 
         nv01 nv = Auth.user;
 
@@ -119,33 +119,33 @@ public class ChamCongJFrame extends javax.swing.JFrame {
         }
     }
 
-    private void upDateTimeIn() {
-        try {
-            String sql = "update chamcong set NgayGioVaoCong = ? where MaNV = ?";
-            PreparedStatement ps = JDBC.getStmt(sql);
-
-            ps.setString(1, txtTimeIn.getText());
-            ps.setString(2, txtMaNV.getText());
-            ps.executeUpdate();
-//            luuFile();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
-        }
-    }
+//    private void upDateTimeIn() {
+//        try {
+//            String sql = "update chamcong set NgayGioVaoCong = ? where MaNV = ?";
+//            PreparedStatement ps = JDBC.getStmt(sql);
+//
+//            ps.setString(1, txtTimeIn.getText());
+//            ps.setString(2, txtMaNV.getText());
+//            ps.executeUpdate();
+////            luuFile();
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
+//            System.out.println(ex);
+//        }
+//    }
 
     private void upDateTimeOut() {
-        try {
-            String sql = "update chamcong set NgayGioRaCong = ? where MaNV = ?";
-            PreparedStatement ps = JDBC.getStmt(sql);
+//        try {
+//            String sql = "update chamcong set NgayGioRaCong = ? where MaNV = ?";
+//            PreparedStatement ps = JDBC.getStmt(sql);
 
-            ps.setString(1, txtTimeOut.getText());
-            ps.setString(2, txtMaNV.getText());
-            ps.executeUpdate();
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
-            System.out.println(ex);
-        }
+//            ps.setString(1, txtTimeOut.getText());
+//            ps.setString(2, txtMaNV.getText());
+//            ps.executeUpdate();
+//        } catch (Exception ex) {
+//            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
+//            System.out.println(ex);
+//        }
     }
 
 //    private void luuFile() {
@@ -191,22 +191,22 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 //        }
 //    }
     
-    private void hienThi(){
-        String sql = "select * from chamcong";
-        ResultSet rs = JDBC.query(sql);
-        
-        try {
-            while(rs.next()){
-                String ngaygiovaoca = rs.getString("NgayGioVaoCong");
-                String ngaygioraca = rs.getString("NgayGioRaCong");
-                
-                txtTimeIn.setText(ngaygiovaoca);
-                txtTimeOut.setText(ngaygioraca);
-            }
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }   
+//    private void hienThi(){
+//        String sql = "select * from chamcong";
+//        ResultSet rs = JDBC.query(sql);
+//        
+//        try {
+//            while(rs.next()){
+//                String ngaygiovaoca = rs.getString("NgayGioVaoCong");
+//                String ngaygioraca = rs.getString("NgayGioRaCong");
+//                
+//                txtTimeIn.setText(ngaygiovaoca);
+//                txtTimeOut.setText(ngaygioraca);
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }   
 
     
 
@@ -372,7 +372,7 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 
     private void btntimeinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimeinActionPerformed
         valiDateTimeIn();
-        upDateTimeIn();
+//        upDateTimeIn();
 
     }//GEN-LAST:event_btntimeinActionPerformed
 
