@@ -72,11 +72,11 @@ public class Admin extends javax.swing.JFrame {
         String maPhongBan = phongBanMap.get(tenPhongBan);
 
         try {
-            String url = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;";
-            String username = "SA";
-            String password = "phong123aa";
-
-            Connection conn = DriverManager.getConnection(url, username, password);
+//            String url = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;";
+//            String username = "SA";
+//            String password = "phong123aa";
+//
+//            Connection conn = DriverManager.getConnection(url, username, password);
 
             String insertQuery;
             if (rdoquanly.isSelected()) {
@@ -84,7 +84,7 @@ public class Admin extends javax.swing.JFrame {
             } else {
                 insertQuery = "INSERT INTO NhanVien (MaNV, HoVaTen, Email, SDT, cccd, NgaySinh, GioiTinh, MatKhau, diachi, Anh, BacLuong,MaPB) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             }
-            PreparedStatement pstmt = conn.prepareStatement(insertQuery);
+            PreparedStatement pstmt = JDBC.getStmt(insertQuery);
             pstmt.setString(1, manv);
             pstmt.setString(2, hoten);
             pstmt.setString(3, sdt);
@@ -100,7 +100,7 @@ public class Admin extends javax.swing.JFrame {
 
             pstmt.executeUpdate();
             pstmt.close();
-            conn.close();
+//            conn.close();
             JOptionPane.showMessageDialog(this, "Thêm nhân viên thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
             clearInputs();
             loadDataToTable();
@@ -144,31 +144,31 @@ public class Admin extends javax.swing.JFrame {
         lblanhnv.setIcon(new ImageIcon(scaledImage));
     }
 
-    private void loadDataToTable() {
+private void loadDataToTable() {
         //String phongban = cbPhongBan.getItemAt(index);
         while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
         tblthongtin.setModel(model);
         try {
-            Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa"); // kết nối database
+//            Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=mtuan120304"); // kết nối database
             // Connection conn2 = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa"); // kết nối database
             String sql = "SELECT * FROM quanly";
             
-
-            Statement statement = conn.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
+            ResultSet rs = JDBC.query(sql);
+//            Statement statement = conn.createStatement();
+//            ResultSet rs = statement.executeQuery(sql);
             String sql2 = "SELECT * FROM NhanVien";
-
-            Statement statement2 = conn.createStatement();
-            ResultSet rs2 = statement2.executeQuery(sql2);
+            ResultSet rs2 = JDBC.query(sql2);
+//            Statement statement2 = conn.createStatement();
+//            ResultSet rs2 = statement2.executeQuery(sql2);
 
             model.setRowCount(0);
             //   model.addRow(new Object[]{"t"});
             //  System.out.println("nnnnn");
 
             while (rs.next()) {
-                String manv = rs.getString("MaNV");
+                String manv = rs.getString("MaQL");
                 String hovaten = rs.getString("HoVaTen");
                 String email = rs.getString("Email");
                 String sodt = rs.getString("SDT");
@@ -191,7 +191,7 @@ public class Admin extends javax.swing.JFrame {
 
             }
             rs.close();
-            statement.close();
+//            statement.close();
 
             while (rs2.next()) {
                 String manv = rs2.getString("MaNV");
@@ -219,34 +219,35 @@ public class Admin extends javax.swing.JFrame {
 
             //     System.out.println(model.getValueAt(1, 1));
             rs2.close();
-            statement2.close();
+//            statement2.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
 
     }
+    
  public String layTenPhongBan(String maPhongBan) {
         String tenPhongBan = null;
 
         try {
-            String url = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;";
-            String username = "SA";
-            String password = "phong123aa";
-
-            Connection conn = DriverManager.getConnection(url, username, password);
+//            String url = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;";
+//            String username = "SA";
+//            String password = "phong123aa";
+//
+//            Connection conn = DriverManager.getConnection(url, username, password);
 
             String query = "SELECT TenPB FROM PhongBan WHERE MaPB = ?";
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, maPhongBan);
+            PreparedStatement ps = JDBC.getStmt(query);
+            ps.setString(1, maPhongBan);
 
-            ResultSet rs = pstmt.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 tenPhongBan = rs.getString("TenPB");
             }
 
             rs.close();
-            pstmt.close();
-            conn.close();
+            ps.close();
+//            conn.close();
         } catch (SQLException ex) {
             ex.printStackTrace();
             // Xử lý ngoại lệ nếu có
