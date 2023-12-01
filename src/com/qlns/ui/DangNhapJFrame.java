@@ -7,6 +7,8 @@ import com.qlns.entity.NhanVien;
 import com.qlns.utils.Auth;
 import javax.swing.JOptionPane;
 import com.qlns.utils.JDBC;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -16,20 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JLayeredPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 public class DangNhapJFrame extends javax.swing.JFrame {
 
     List<BNS> admin = new ArrayList<>();
     List<nv01> a = new ArrayList<>();
-
+   
     //private NhanVien LoggedInUser;
     public DangNhapJFrame() {
         initComponents();
         setLocationRelativeTo(null);
-
+       
     }
-
+   
+     
     boolean checkNull() {
         String user = txtUser.getText();
         String pass = String.valueOf(txtPass.getPassword());
@@ -109,21 +115,21 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        txtUser = new javax.swing.JTextField();
+        forgetpass = new javax.swing.JLabel();
         btnXacNhan = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        txtPass = new javax.swing.JPasswordField();
         ckb1 = new javax.swing.JCheckBox();
-        jLabel3 = new javax.swing.JLabel();
+        txtPass = new javax.swing.JPasswordField();
+        txtUser = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setText("Mã Nhân Viên");
-
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
+        forgetpass.setForeground(new java.awt.Color(255, 51, 102));
+        forgetpass.setText("Bạn Quên Mật Khẩu ?");
+        forgetpass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                forgetpassMouseClicked(evt);
             }
         });
 
@@ -134,8 +140,6 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Mật khẩu");
-
         ckb1.setText("Ẩn Hiên Mật Khẩu.");
         ckb1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,85 +147,89 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("Bạn Quên Mật Khẩu ?");
-        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+        txtUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUserActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Mật khẩu");
+
+        jLabel1.setText("Mã Nhân Viên");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPass)
-                    .addComponent(txtUser)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(ckb1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                        .addComponent(btnXacNhan))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                            .addComponent(txtUser)
+                            .addComponent(txtPass, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(ckb1)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(forgetpass)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnXacNhan)
+                        .addGap(65, 65, 65))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(11, 11, 11)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 49, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnXacNhan)
-                            .addComponent(jLabel3))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ckb1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(ckb1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(forgetpass)
+                    .addComponent(btnXacNhan))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
-
     private void btnXacNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXacNhanActionPerformed
         logIn();
     }//GEN-LAST:event_btnXacNhanActionPerformed
 
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-      
-    }//GEN-LAST:event_jLabel3MouseClicked
+    private void forgetpassMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_forgetpassMouseClicked
+        new QuenmatkhauJFame().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_forgetpassMouseClicked
 
     private void ckb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ckb1ActionPerformed
-          if (ckb1.isSelected()) {
-            txtPass.setEchoChar((char) 0); 
+        if (ckb1.isSelected()) {
+            txtPass.setEchoChar((char) 0);
         } else {
-            txtPass.setEchoChar('*'); 
+            txtPass.setEchoChar('*');
         }
     }//GEN-LAST:event_ckb1ActionPerformed
+
+    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,9 +269,9 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JCheckBox ckb1;
+    private javax.swing.JLabel forgetpass;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField txtPass;
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
