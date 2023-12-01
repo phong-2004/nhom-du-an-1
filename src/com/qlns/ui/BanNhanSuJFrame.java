@@ -1,6 +1,9 @@
 
 package com.qlns.ui;
 
+import java.awt.Color;
+import javax.swing.SwingConstants;
+
 
 public class BanNhanSuJFrame extends javax.swing.JFrame {
 
@@ -8,6 +11,10 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
     public BanNhanSuJFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        LB1.setHorizontalAlignment(SwingConstants.CENTER);
+        LB1.setVerticalAlignment(SwingConstants.CENTER);
+        LB1.setOpaque(true); // Đặt opaque thành true để hiển thị màu nền
+        LB1.setBackground(Color.red);
     }
 
     /**
@@ -19,6 +26,8 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        LB1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -33,6 +42,13 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/qlns/icon/logo.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
+
+        LB1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        LB1.setText("Nhóm ? Quản Lý Nhân Sự !");
+        LB1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
 
         jMenu1.setText("Hệ Thống");
 
@@ -86,12 +102,24 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 737, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 707, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(LB1, javax.swing.GroupLayout.PREFERRED_SIZE, 699, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 526, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(LB1)
+                .addContainerGap())
         );
+
+        LB1.getAccessibleContext().setAccessibleName("\t\t\tNhóm ? Quản Lý Nhân Sự !");
+        LB1.getAccessibleContext().setAccessibleDescription("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,7 +144,7 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -141,6 +169,8 @@ public class BanNhanSuJFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel LB1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
