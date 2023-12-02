@@ -1,14 +1,17 @@
 
- 
 package com.qlns.ui;
 
-public class resetpass extends javax.swing.JFrame {
+/**
+ *
+ * @author ACER
+ */
+public class main extends javax.swing.JFrame {
 
- 
-    public resetpass() {
+    /**
+     * Creates new form main
+     */
+    public main() {
         initComponents();
-        setLocationRelativeTo(null);
-                
     }
 
     /**
@@ -53,20 +56,20 @@ public class resetpass extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(resetpass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(resetpass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(resetpass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(resetpass.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(main.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new resetpass().setVisible(true);
+                new main().setVisible(true);
             }
         });
     }
