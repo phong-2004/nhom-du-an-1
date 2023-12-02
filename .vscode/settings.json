@@ -15,5 +15,6 @@
         "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\jgoodies-looks-2.4.1.jar",
         "c:\\Users\\ACER\\Downloads\\jcalendar-1.4\\lib\\junit-4.6.jar",
         "c:\\Users\\ACER\\Downloads\\sqljdbc_12.2.0.0_enu\\sqljdbc_12.2\\enu\\mssql-jdbc-12.2.0.jre11.jar"
-    ]
+    ],
+    "cmake.configureOnOpen": true
 }
