@@ -7,6 +7,8 @@ import com.qlns.entity.NhanVien;
 import com.qlns.utils.Auth;
 import javax.swing.JOptionPane;
 import com.qlns.utils.JDBC;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -46,17 +48,18 @@ public class DangNhapJFrame extends javax.swing.JFrame {
 
         return true;
     }
-    NhanVienDAO nvDAO = new NhanVienDAO();
 
     void logIn() {
         if (checkNull()) {
-            String connectionUrl = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa";
-            Connection con;
+//            String connectionUrl = "jdbc:sqlserver://localhost;databaseName=QLNS1;encrypt=false;user=SA;password=phong123aa";
+//            Connection con;
             try {
                 admin.removeAll(admin);
-                con = DriverManager.getConnection(connectionUrl);
-                Statement stm = con.createStatement();
-                ResultSet rs = stm.executeQuery("Select * from BNS");
+//                con = DriverManager.getConnection(connectionUrl);
+//                Statement stm = con.createStatement();
+//                ResultSet rs = stm.executeQuery("Select * from BNS");
+                String sql = "Select * from BNS";
+                ResultSet rs = JDBC.query(sql);
                 while (rs.next()) {
                     BNS ad = new BNS(rs.getString("MaNV"), rs.getString("MatKhau"));
 
@@ -79,9 +82,11 @@ public class DangNhapJFrame extends javax.swing.JFrame {
             try {
                 //retainAll 
                 a.retainAll(a);
-                con = DriverManager.getConnection(connectionUrl);
-                Statement stm = con.createStatement();
-                ResultSet rs = stm.executeQuery("Select * from NhanVien");
+//                con = DriverManager.getConnection(connectionUrl);
+//                Statement stm = con.createStatement();
+//                ResultSet rs = stm.executeQuery("Select * from NhanVien");
+                String sql = "Select * from NhanVien";
+                ResultSet rs = JDBC.query(sql);
                 while (rs.next()) {
                     nv01 ad = new nv01(rs.getString("MaNV"), rs.getString("MatKhau"), rs.getString("HoVaTen"));
                     a.add(ad);
@@ -95,8 +100,11 @@ public class DangNhapJFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Login Thành công ");
                     Auth.user = a;
                     ChamCongJFrame as = new ChamCongJFrame();
+                    
                     as.setVisible(true);
+                    as.hienThi();
                     dispose();
+
                     return;
                 }
             }
@@ -223,5 +231,4 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txtUser;
     // End of variables declaration//GEN-END:variables
 
-    
 }

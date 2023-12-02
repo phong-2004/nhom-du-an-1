@@ -10,28 +10,22 @@ import java.time.DateTimeException;
  *
  * @author tuann
  */
-public class QLChamCong {
-    private String MaCC;
+public class ClassQLChamCong {
+    
     private String MaNV;
+    private String HoVaTen;
     private String NgayGioVaoCa;
     private String NgayGioRaCa;
 
-    public QLChamCong() {
+    public ClassQLChamCong() {
     }
 
-    public QLChamCong(String MaCC, String MaNV, String NgayGioVaoCa, String NgayGioRaCa) {
-        this.MaCC = MaCC;
+    public ClassQLChamCong(String MaNV, String HoVaTen,String NgayGioVaoCa, String NgayGioRaCa) {
+        
         this.MaNV = MaNV;
+        this.HoVaTen = HoVaTen;
         this.NgayGioVaoCa = NgayGioVaoCa;
         this.NgayGioRaCa = NgayGioRaCa;
-    }
-
-    public String getMaCC() {
-        return MaCC;
-    }
-
-    public void setMaCC(String MaCC) {
-        this.MaCC = MaCC;
     }
 
     public String getMaNV() {
@@ -40,6 +34,14 @@ public class QLChamCong {
 
     public void setMaNV(String MaNV) {
         this.MaNV = MaNV;
+    }
+
+    public String getHoVaTen() {
+        return HoVaTen;
+    }
+
+    public void setHoVaTen(String HoVaTen) {
+        this.HoVaTen = HoVaTen;
     }
 
     public String getNgayGioVaoCa() {

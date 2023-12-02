@@ -12,22 +12,32 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
-//import java.sql.PreparedStatement;
+import java.sql.PreparedStatement;
 //import java.util.logging.Level;
 //import java.util.logging.Logger;
 //import javax.swing.JLabel;
 import com.qlns.entity.nv01;
+import com.qlns.utils.JDBC;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
+import java.util.Arrays;
 
 //import java.io.File;
 //import java.io.FileReader;
 //import java.io.FileWriter;
 //import java.sql.Connection;
 //import java.sql.DriverManager;
-
 //import com.qlns.utils.JDBC;
 public class ChamCongJFrame extends javax.swing.JFrame {
 
-    private SimpleDateFormat dateFormat;
+    SimpleDateFormat dateFormat;
     private String timeIn;
     private String timeOut;
     // NhanVien LoggedInUser;
@@ -38,11 +48,10 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 
         initComponents();
         setLocationRelativeTo(null);
-
         updateDateTimeLabels();
         loadTimeInInfo();
+
         loadTimeOut();
-       // hienThi();
 
         nv01 nv = Auth.user;
 
@@ -57,9 +66,10 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 // public void hienThiTenNhanVien(String tenNhanVien) {
 //     name.setText(tenNhanVien); // Hiển thị tên nhân viên lên label name
 // }
+    Date now = new Date();
+
     private void updateDateTimeLabels() {
 
-        Date now = new Date();
         dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         //dateFormat.format dinh dang doi tuong date thanh 1 chuoi theo dinh dang cua doi tuong SimpleDateFormat.
         txtNgayThang.setText(dateFormat.format(now));
@@ -93,84 +103,119 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 
     private void valiDateTimeIn() {
         if (!isTimeIn) {
-
-            timeIn = new SimpleDateFormat("HH:mm:ss - yyyy-MM-dd").format(new Date());
-            loadTimeInInfo();
+            upDateTimeIn();
             isTimeIn = true;
             JOptionPane.showMessageDialog(this, "Bạn đã time in thành công");
 
-        } else {
-           
-            JOptionPane.showMessageDialog(this, "Bạn đã time in", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     private void valiDateTimeOut() {
         if (!isTimeIn) {
-            
+
             JOptionPane.showMessageDialog(this, "Bạn cần time in trước", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
 
         } else {
-
-            timeOut = new SimpleDateFormat("HH:mm:ss - yyyy-MM-dd").format(new Date());
-            loadTimeOut();
+            upDateTimeOut();
             isTimeIn = false;
             JOptionPane.showMessageDialog(this, "Bạn đã time out thành công");
         }
     }
 
-//    private void upDateTimeIn() {
+    void upDateTimeIn() {
+        timeIn = new SimpleDateFormat("HH:mm:ss - yyyy-MM-dd").format(new Date());
+        loadTimeInInfo();
+        try {
+            String sql = "INSERT INTO chamcong( MaNV, NgayGioVaoCong, NgayGioRaCong)\n"
+                    + "VALUES (?, ?, null);";
+            PreparedStatement ps = JDBC.getStmt(sql);
+            ps.setString(1, txtMaNV.getText());
+            ps.setString(2, txtTimeIn.getText());
+
+            ps.executeUpdate();
+            ps.close();
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+    }
+
+    private void upDateTimeOut() {
+        timeOut = new SimpleDateFormat("HH:mm:ss - yyyy-MM-dd").format(new Date());
+        loadTimeOut();
+        try {
+            String sql = "select MaCC from chamcong where MaNV = ? and NgayGioVaoCong = ?";
+            PreparedStatement ps = JDBC.getStmt(sql);
+            ps.setString(1, txtMaNV.getText());
+            ps.setString(2, txtTimeIn.getText());
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String maCC = rs.getString("MaCC");
+
+                sql = "update chamcong set NgayGioRaCong = ? where MaCC = ?";
+                ps = JDBC.getStmt(sql);
+                ps.setString(1, txtTimeOut.getText());
+                ps.setString(2, maCC);
+                ps.executeUpdate();
+                ps.close();
+            }
+            rs.close();
+            ps.close();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
+            System.out.println(ex);
+        }
+    }
+//    private void luuFileTimeIn() {
 //        try {
-//            String sql = "update chamcong set NgayGioVaoCong = ? where MaNV = ?";
-//            PreparedStatement ps = JDBC.getStmt(sql);
+//            // Tạo tệp nếu nó không tồn tại
+//            File file = new File("ChamCong.txt");
+//            if (!file.exists()) {
+//                file.createNewFile();
+//            }                    
+////                // Tạo đối tượng ObjectOutputStream để ghi mảng vào tệp
+//                FileOutputStream fileOutputStream = new FileOutputStream(file, true);
 //
-//            ps.setString(1, txtTimeIn.getText());
-//            ps.setString(2, txtMaNV.getText());
-//            ps.executeUpdate();
-////            luuFile();
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
-//            System.out.println(ex);
+////                // Ghi mảng vào tệp
+//                String array[] = {txtMaNV.getText(), txtname.getText(), timeIn};
+//                String arrayString = Arrays.toString(array);
+//                fileOutputStream.write(arrayString.getBytes());
+//                fileOutputStream.write("\n".getBytes());
+//
+//                // Đóng các tài nguyên objectOutputStream và fileOutputStream
+//                fileOutputStream.close();               
+//
+//                // Hiển thị thông báo thành công
+//                System.out.println("Du lieu da duoc luu thanh cong vao ChamCong.txt");
+//            
+//
+//        } catch (IOException e) {
+//            // Xử lý IOException cụ thể
+//            System.out.println("Loi ghi du lieu vao tep: " + e.getMessage());
+//        } catch (Exception e) {
+//            // Xử lý các ngoại lệ khác một cách chung chung
+//            System.out.println("Da xay ra loi khi luu du lieu: " + e.getMessage());
 //        }
 //    }
 
-    private void upDateTimeOut() {
+//     private void docFile() {
 //        try {
-//            String sql = "update chamcong set NgayGioRaCong = ? where MaNV = ?";
-//            PreparedStatement ps = JDBC.getStmt(sql);
-
-//            ps.setString(1, txtTimeOut.getText());
-//            ps.setString(2, txtMaNV.getText());
-//            ps.executeUpdate();
-//        } catch (Exception ex) {
-//            JOptionPane.showMessageDialog(this, "Lỗi", "Error", JOptionPane.ERROR_MESSAGE);
-//            System.out.println(ex);
-//        }
-    }
-
-//    private void luuFile() {
-//        try {
-//            // luu time in vào 1 file 
-//            //đăng xuất
-//            //đăng nhập lại 
-//            //đọc file từ file đã lưu time in
-//            String time_in = txtTimeIn.getText();
-//
-//            //tạo đối tượng File
-//            File file = new File("NgayGioVaoCa.txt");
-//            // tạo đối tượng FileWrite
-//            FileWriter writer = new FileWriter(file);
-//            //ghi dữ liệu vào file            
-//            writer.write(time_in);
-//            //đóng file
-//            writer.close();
-//
+//            FileReader fileReader = new FileReader("ChamCong.txt");
+//            // Tạo đối tượng BufferedReader để đọc dữ liệu từ tệp
+//            BufferedReader bufferedReader = new BufferedReader(fileReader);
+//            //đọc dữ liệu từ tệp 
+//            String line;
+//            while((line = bufferedReader.readLine()) != null)){
+//                
+//            }
 //        } catch (Exception e) {
-//            System.out.println("e");
 //        }
 //    }
 //    boolean dangxuat = false;
-
 //    private void docFile() {
 //        try {
 ////            if (!dangxuat) {
@@ -190,25 +235,61 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 ////            dangxuat = true;
 //        }
 //    }
-    
-//    private void hienThi(){
-//        String sql = "select * from chamcong";
-//        ResultSet rs = JDBC.query(sql);
-//        
-//        try {
-//            while(rs.next()){
-//                String ngaygiovaoca = rs.getString("NgayGioVaoCong");
-//                String ngaygioraca = rs.getString("NgayGioRaCong");
-//                
-//                txtTimeIn.setText(ngaygiovaoca);
-//                txtTimeOut.setText(ngaygioraca);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-//    }   
 
-    
+    void hienThi() {
+
+        try {
+            String sql = "select NgayGioVaoCong from chamcong where MaNV = ?";
+            PreparedStatement ps = JDBC.getStmt(sql);
+            ps.setString(1, txtMaNV.getText());
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+
+                String ngaygiovaocong = rs.getString("NgayGioVaoCong");
+                txtTimeIn.setText(ngaygiovaocong);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private void clear() {
+        if (txtTimeOut != null) {
+            txtTimeIn.setText("Chưa time in");
+            txtTimeOut.setText("Chưa time out");
+        }
+    }
+
+
+    private void checkChamCongTimeIn() {
+        try {
+            String sql = "select NgayGioVaoCong from chamcong where MaNV = ? and NgayGioVaoCong like ?";
+            PreparedStatement ps = JDBC.getStmt(sql);
+            ps.setString(1, txtMaNV.getText());
+            ps.setString(2, "%" + dateFormat.format(now) + "%");
+
+            ResultSet rs = ps.executeQuery();
+
+            if (!rs.next()) {
+                System.out.println("nhan vien chua cham cong trong ngay");
+
+                //cho time in
+                valiDateTimeIn();
+                return;
+            } else {
+                System.out.println("nhan vien da cham cong trong ngay");
+
+                //ko cho time in nữa
+                isTimeIn = true;
+                JOptionPane.showMessageDialog(this, "Bạn đã time in", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -371,15 +452,13 @@ public class ChamCongJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btntimeinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimeinActionPerformed
-        valiDateTimeIn();
-//        upDateTimeIn();
+        checkChamCongTimeIn();
 
     }//GEN-LAST:event_btntimeinActionPerformed
 
     private void btntimeoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntimeoutActionPerformed
         valiDateTimeOut();
-        upDateTimeOut();
-
+        clear();
     }//GEN-LAST:event_btntimeoutActionPerformed
 
     private void txtTimeInAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_txtTimeInAncestorAdded

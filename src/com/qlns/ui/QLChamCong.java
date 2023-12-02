@@ -4,22 +4,32 @@
  */
 package com.qlns.ui;
 
+import com.qlns.entity.ClassQLChamCong;
 import com.qlns.utils.JDBC;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import java.sql.PreparedStatement;
-
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
  * @author tuann
  */
 public class QLChamCong extends javax.swing.JFrame {
-
-    private int row;
+    
+//    private int row;
 //    public ChamCongJFrame qlchamcong;
 
     /**
@@ -30,36 +40,96 @@ public class QLChamCong extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         loadData();
     }
-    
-    DefaultTableModel model = new DefaultTableModel( new String[]{"Mã chấm công", "Mã nhân viên", "Ngày giờ vào ca", "Ngày giờ ra ca"},0);
-    
-    private void loadData(){
-        while(model.getRowCount() > 0){
+    List<ClassQLChamCong> list = new ArrayList<>();
+    DefaultTableModel model = new DefaultTableModel(new String[]{"Mã nhân viên", "Họ và tên", "Ngày giờ vào ca", "Ngày giờ ra ca"}, 0);
+
+    private void loadData() {
+        while (model.getRowCount() > 0) {
             model.removeRow(0);
         }
         tblChamCong.setModel(model);
-        String sql = "select * from ChamCong";
+        String sql = "select chamcong.MaNV, NhanVien.HoVaTen, chamcong.NgayGioVaoCong, chamcong.NgayGioRaCong\n"
+                + "from chamcong \n"
+                + "join NhanVien on chamcong.MaNV = NhanVien.MaNV";
         ResultSet rs = JDBC.query(sql);
         model.setRowCount(0);
         
         try {
-            while(rs.next()){
-                String macc = rs.getString("MaCC");
+            while (rs.next()) {
+
                 String manv = rs.getString("MaNV");
+                String hovaten = rs.getString("HoVaTen");
                 String ngayGioVaoCa = rs.getString("NgayGioVaoCong");
                 String ngayGioRaCa = rs.getString("NgayGioRaCong");
                 
-                model.addRow(new Object[]{macc, manv, ngayGioVaoCa, ngayGioRaCa});
+                ClassQLChamCong qlcc = new ClassQLChamCong(manv, hovaten, ngayGioVaoCa, ngayGioRaCa);
+                list.add(qlcc);
+                model.addRow(new Object[]{manv,hovaten, ngayGioVaoCa, ngayGioRaCa});
+                
             }
+            
             rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(QLChamCong.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
 
     
+    private void xuatExcel(){
+        try {
+            //workbook đại diện cho file excel
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            //sheet đại diện cho 1 trang tính
+            XSSFSheet sheet = workbook.createSheet("Danhsachchamcong");
+            //row đại diện cho 1 hàng
+            XSSFRow row = null;
+            //cell đại diện cho 1 ô
+            Cell cell = null;
+            
+            row = sheet.createRow(3);
+            cell = row.createCell(0, CellType.STRING);
+            cell.setCellValue("Mã NV");
+            
+            cell = row.createCell(1, CellType.STRING);
+            cell.setCellValue("Họ và tên");
+            
+            cell = row.createCell(2, CellType.STRING);
+            cell.setCellValue("Ngày giờ vào ca");
+            
+            cell = row.createCell(3, CellType.STRING);
+            cell.setCellValue("Ngày giờ ra ca");
+            
+            
+            for (int i =0; i < list.size(); i++) {
+                row = sheet.createRow(4+i);
+                
+                cell = row.createCell(0, CellType.STRING);
+                cell.setCellValue(list.get(i).getMaNV());
+                
+                cell = row.createCell(1, CellType.STRING);
+                cell.setCellValue(list.get(i).getHoVaTen());
+                
+                cell = row.createCell(2, CellType.STRING);
+                cell.setCellValue(list.get(i).getNgayGioVaoCa());
+                
+                cell = row.createCell(3, CellType.STRING);
+                cell.setCellValue(list.get(i).getNgayGioRaCa());
+            }
+            
+            File file = new File("danhsachchamcong.xlsx");
+            
+            try {
+                FileOutputStream fileOutput = new FileOutputStream(file);
+                workbook.write(fileOutput);
+                fileOutput.close();
+            } catch (Exception e) {
+            }
+            JOptionPane.showMessageDialog(this, "Xuất file thành công");
+        } catch (Exception e) {
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +143,7 @@ public class QLChamCong extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblChamCong = new javax.swing.JTable();
+        btnIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,10 +172,15 @@ public class QLChamCong extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
         );
+
+        btnIn.setText("Xuất File");
+        btnIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,6 +194,10 @@ public class QLChamCong extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnIn)
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,12 +205,19 @@ public class QLChamCong extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnIn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInActionPerformed
+        // TODO add your handling code here:
+        xuatExcel();
+    }//GEN-LAST:event_btnInActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,9 +255,11 @@ public class QLChamCong extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblChamCong;
     // End of variables declaration//GEN-END:variables
+
 }
