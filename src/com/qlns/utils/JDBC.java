@@ -15,7 +15,7 @@ public class JDBC {
    private   static String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
   private   static String dburl = "jdbc:sqlserver://localhost;database=QLNS1;encrypt=false";
   private   static String user = "SA";
-  private   static String pass = "phong123aa";
+  private   static String pass = "mtuan120304";
     
     static {
         try {
