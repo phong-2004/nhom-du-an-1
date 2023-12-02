@@ -28,7 +28,7 @@ public class DangNhapJFrame extends javax.swing.JFrame {
     List<BNS> admin = new ArrayList<>();
     List<nv01> a = new ArrayList<>();
    
-    //private NhanVien LoggedInUser;
+   
     public DangNhapJFrame() {
         initComponents();
         setLocationRelativeTo(null);

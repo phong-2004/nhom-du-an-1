@@ -1,15 +1,10 @@
 
 package com.qlns.ui;
 
-/**
- *
- * @author ACER
- */
+
 public class main extends javax.swing.JFrame {
 
-    /**
-     * Creates new form main
-     */
+
     public main() {
         initComponents();
     }

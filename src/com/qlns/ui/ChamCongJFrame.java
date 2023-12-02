@@ -54,9 +54,7 @@ public class ChamCongJFrame extends javax.swing.JFrame {
 
     }
 
-// public void hienThiTenNhanVien(String tenNhanVien) {
-//     name.setText(tenNhanVien); // Hiển thị tên nhân viên lên label name
-// }
+
     private void updateDateTimeLabels() {
 
         Date now = new Date();

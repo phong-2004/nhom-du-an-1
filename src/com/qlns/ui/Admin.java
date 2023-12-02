@@ -43,17 +43,8 @@ public class Admin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         loadDataToTable();
         phongBanMap = new HashMap<>();
-      //  map();
+     
     }
-
-//    public void map() {
-//         phongBanMap.put("Phòng Kinh Doanh", "PB001");
-//        phongBanMap.put("Phòng Marketing", "PB002");
-//        phongBanMap.put("Phòng IT", "PB004");
-//        phongBanMap.put("Phòng Tài Chính", "PB005");
-//        phongBanMap.put("Phong Ban A", "PB003");
-//       
-//    }
 
     private void Savedata() {
 
